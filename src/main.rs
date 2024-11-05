@@ -1,6 +1,5 @@
 use anyhow::{Context, Result};
 use clap::Parser;
-use std::io::Write;
 use indicatif::{ProgressBar, ProgressStyle};
 // use log::{info, warn};
 // use env_logger;
@@ -34,7 +33,7 @@ fn main() -> Result<()> {
         progressbar.inc(1);
     }
     progressbar.finish_with_message("done");
-    find_matche_word(&content, &args.pattern, &mut std::io::stdout());
+    grrs::find_matchs_word(&content, &args.pattern, &mut std::io::stdout());
     
 
     Ok(())
@@ -44,17 +43,10 @@ fn main() -> Result<()> {
     
 // }
 
-fn find_matche_word(content: &str, pattern: &str, mut writer: impl Write){
-    for line in content.lines() {
-        if line.contains(pattern) {
-            writeln!(writer, "{}", line).unwrap();
-        }
-    }
-}
 
 #[test]
 fn find_a_match() {
     let mut result = Vec::new();
-    find_matche_word("lorem ipsum\ndolor sit amet", "lorem", &mut result);
+    grrs::find_matchs_word("lorem ipsum\ndolor sit amet", "lorem", &mut result);
     assert_eq!(result, b"lorem ipsum\n");
 }
